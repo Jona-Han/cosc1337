@@ -28,6 +28,7 @@ int main()
         }
 
         //Build top half of diamond
+        cout << endl;
         for (int i = 1; i <= number_of_lines; i += 2)
         {
             for (int j = 1; j <= (number_of_lines - i) / 2; j++)
