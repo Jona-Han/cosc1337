@@ -13,13 +13,13 @@ int main()
     while (true)
     {
         cout << "Hello, this application will allow you to create a diamond.\n";
-        cout << "Please enter the size of your diamond:  ";
+        cout << "Please enter the size of your diamond or 0 to quit:  ";
         int number_of_lines {};
         while (!(cin >> number_of_lines))
         {
             cin.clear();
             cin.ignore(10000, '\n');
-            std :: cout << "Invalid input. Please enter a non-negative whole number:  ";
+            std :: cout << "Invalid input. Please enter a whole number or 0 to quit:  ";
         }
 
         if (number_of_lines <= 0)
@@ -56,6 +56,10 @@ int main()
             cout << endl;
         }
         cout << endl;
+    }
+}
+
+//The following loop only works for odd diamonds
 /*
         int mid_plus_one = number_of_lines / 2 + 1;
         //Draw odd diamond
@@ -73,5 +77,3 @@ int main()
         }
         cout << endl;
 */
-    }
-}
