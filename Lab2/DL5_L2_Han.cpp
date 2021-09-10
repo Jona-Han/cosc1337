@@ -15,7 +15,7 @@ int main()
         cout << "Hello, this application will allow you to create a diamond.\n";
         cout << "Please enter the size of your diamond or 0 to quit:  ";
         int number_of_lines {};
-        while (!(cin >> number_of_lines) or number_of_lines < 0)
+        while (!(cin >> number_of_lines))
         {
             cin.clear();
             cin.ignore(10000, '\n');
@@ -32,30 +32,13 @@ int main()
         cout << endl;
         for (int i = 1; i <= number_of_lines; i += 2)
         {
-            for (int j = 1; j <= (number_of_lines - i) / 2; j++)
-            {
-                cout << ' ';
-            }
-            for (int j = 1; j <= i; j++)
-            {
-                cout << '*';
-            }
-            cout << endl;
+            cout << string((number_of_lines - i) / 2, ' ') << string(i, '*') << endl;
         }
 
         //Build bottom half of diamond
-        int mid_point = number_of_lines / 2;
-        for (int i = 2 * mid_point - 1; i >= 1; i -= 2)
+        for (int i = 2 * (number_of_lines / 2) - 1; i >= 1; i -= 2)
         {
-            for (int j = 1; j <= (number_of_lines - i) / 2; j++)
-            {
-                cout << ' ';
-            }
-            for (int j = 1; j <= i; j++)
-            {
-                cout << '*';
-            }
-            cout << endl;
+            cout << string((number_of_lines - i) / 2, ' ') << string(i, '*') << endl;
         }
         cout << endl;
     }
