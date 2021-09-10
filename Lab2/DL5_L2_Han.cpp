@@ -15,15 +15,16 @@ int main()
         cout << "Hello, this application will allow you to create a diamond.\n";
         cout << "Please enter the size of your diamond or 0 to quit:  ";
         int number_of_lines {};
-        while (!(cin >> number_of_lines))
+        while (!(cin >> number_of_lines) or number_of_lines < 0)
         {
             cin.clear();
             cin.ignore(10000, '\n');
-            std :: cout << "Invalid input. Please enter a whole number or 0 to quit:  ";
+            cout << "Invalid input. Please enter a whole number or 0 to quit:  ";
         }
 
         if (number_of_lines <= 0)
         {
+            cout << "Goodbye!" << endl;
             return 0;
         }
 
