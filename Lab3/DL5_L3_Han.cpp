@@ -15,11 +15,11 @@ int main ()
     cout << "Welcome to the third grade made quiz: \n" << "How many questions would you like?: ";
 
     int number_of_questions {};
-    while (!(cin >> number_of_questions) and (number_of_questions >= 0))
+    while (!(cin >> number_of_questions) or (number_of_questions <= 0))
     {
         cin.clear();
         cin.ignore(10000, '\n');
-        cout << "Invalid input. Please enter a positive whole number to continue or a negative number to quit: ";
+        cout << "Invalid input. Please enter a positive whole number to continue: ";
     }
 
     cout << "(You may enter a negative number at any time to quit the program)\n";
