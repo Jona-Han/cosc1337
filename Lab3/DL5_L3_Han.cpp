@@ -1,6 +1,6 @@
 /*
 Author: Jonathan Han; Course: COSC 1337 Fall 2021 DL5; Instructor: Thayer
-Lab 3: Math tutor program/quiz
+Lab 3: Math tutor program/quiz using random number generator
  */
 
 #include <iostream>
