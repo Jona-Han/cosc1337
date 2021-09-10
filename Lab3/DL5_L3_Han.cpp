@@ -29,6 +29,7 @@ int main ()
     srand(seed);
 
     float num_correct {0};
+    int num_answered {};
     for (int counter = 1; counter <= number_of_questions; counter++)
     {
         //Create questions
@@ -52,6 +53,7 @@ int main ()
         }
         else if (user_answer < 0)
         {
+            num_answered = counter - 1;
             break;
         }
         else
@@ -61,10 +63,9 @@ int main ()
             cout << "Sorry, incorrect! The correct answer was " << question_answer << ".\n";
             continue;
         }
-        break;
     }
 
     //Print score
-    cout << "\nYour score is: " << num_correct << " of " << number_of_questions << " for "
-        <<num_correct / number_of_questions * 100 << "%.\n" << "Goodbye!" << endl;
+    cout << "\nYour score is: " << num_correct << " of " << num_answered << " for "
+        << num_correct / num_answered * 100 << "%.\n" << "Goodbye!" << endl;
 }
