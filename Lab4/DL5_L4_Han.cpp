@@ -16,8 +16,7 @@ Mode current_input_mode = Add;
 float addOrRemove(int num_items, float value);
 void printCurrentMode();
 
-int main()
-{
+int main(){
     cout << "Place your order from Han-dsome Burger Joint. This app shows your calories and cost as "
             "\nyou add items to your food order. You can clear, order, or quit at any time." << endl;
 
@@ -41,8 +40,7 @@ int main()
     float total_cost {0};
 
     //Main loop
-    while (true)
-    {
+    while (true){
         cout << "\nCurrent order: Hamburger:" << num_hamburger << " Fries:" << num_fries << " Soda:" << num_soda
              << " Brownie:" << num_brownie << " TOTAL Calories:" << total_calorie << " TOTAL Cost:$" << fixed
              << setprecision(2) << total_cost << ".\n";
@@ -55,8 +53,7 @@ int main()
         Options user_option = static_cast<Options>(toupper(user_input));
 
         //Check user selected option. Update number of items, total calories, and total cost
-        switch (user_option)
-        {
+        switch (user_option){
             case Hamburger:
                 total_calorie += addOrRemove(num_hamburger, cal_hamburger);
                 total_cost += addOrRemove(num_hamburger, price_hamburger);
@@ -81,13 +78,11 @@ int main()
                 total_calorie = total_cost = num_hamburger = num_fries = num_soda = num_brownie = 0;
                 break;
             case Order: //Check that there is at least 1 item in order and send order
-                if (total_cost == 0)
-                {
+                if (total_cost == 0){
                     cout << "\nPlease input items into your order before ordering.";
                     break;
                 }
-                else
-                {
+                else{
                     cout << "Thank you for ordering! Your order is being sent. Your total cost is $" << fixed
                          << setprecision(2) << total_cost << ". See you soon!\n";
                     exit(EXIT_SUCCESS);
@@ -109,22 +104,24 @@ int main()
 }
 
 //General function to return +value in Addition mode, -value in Subtraction mode, or 0 if number of items is zero
-float addOrRemove(int num_items, float value)
-{
-    switch (current_input_mode)
-    {
+float addOrRemove(int num_items, float value){
+    switch (current_input_mode){
         case Add:
             return value;
         case Subtract:
-            return (num_items > 0) ? -value : 0;
+            if (num_items > 0){
+                return -value;
+            }
+            else{
+                cout << '\a';
+                return 0;
+            }
     }
 }
 
 //Print current input mode statement
-void printCurrentMode()
-{
-    switch (current_input_mode)
-    {
+void printCurrentMode(){
+    switch (current_input_mode){
         case Add:
             cout << "You are currently in item Addition mode. Enter '-' to switch to item Removal mode.\n";
             break;
