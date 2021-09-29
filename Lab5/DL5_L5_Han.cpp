@@ -10,6 +10,7 @@ Lab 5: Create a bar chart by reading from a .txt file
  */
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include <vector>
