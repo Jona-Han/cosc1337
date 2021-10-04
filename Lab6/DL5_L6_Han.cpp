@@ -78,8 +78,7 @@ char input(const string &prompt_text, const string &error_message) {
     while (!(cin >> user_input and isalpha(user_input))) {
         cout << string(4, ' ') << error_message << endl;
         cout << string(2, ' ') << prompt_text << ' ' << one_or_two << " (a-z): ";
-        cin.clear();
-        cin.ignore(10000, '\n');
+        cin.clear(); cin.ignore(10000, '\n');
     }
     change_one_or_two(one_or_two); //Changes one_or_two for the next call
     return user_input;
@@ -95,8 +94,7 @@ double input(double min_value, double max_value, string error_message, const str
     while (!(cin >> user_input and user_input <= max_value and user_input >= min_value)) {
         cout << string(4, ' ') << error_message << endl << string(2, ' ') << prompt_text << ' '
              << one_or_two << '(' << min_value << ',' << max_value << "): ";
-        cin.clear();
-        cin.ignore(10000, '\n');
+        cin.clear(); cin.ignore(10000, '\n');
     }
     change_one_or_two(one_or_two);
     return user_input;
@@ -115,8 +113,7 @@ void input(double &x_value, double &y_value, const string &prompt_text){
         while (!(cin >> user_input and user_input <= 100 and user_input >= -100)) {
             cout << string(4, ' ') << "Invalid. Enter a number between -100 and 100." << endl << string(2, ' ')
                  << prompt_text << ' ' << one_or_two << " (" << x_or_y << "): ";
-            cin.clear();
-            cin.ignore(10000, '\n');
+            cin.clear(); cin.ignore(10000, '\n');
         }
 
         //Checks whether x or y is being obtained and initializes the corresponding variable
@@ -145,28 +142,23 @@ double dist(double x1, double y1, double x2, double y2) { //Calculates distance 
 
 void display(char ch1, char ch2, const string &msg) { //Displays character distance calculation
     static int call_count {1}; //Keeps track of how many times the function has been called
-    cout << "  (#" << call_count << ") " << msg << ' ' << ch1 << " & " << ch2 << " = " << dist(ch1, ch2) << endl;
-    call_count += 1;
+    cout << "  (#" << call_count++ << ") " << msg << ' ' << ch1 << " & " << ch2 << " = " << dist(ch1, ch2) << endl;
 }
 
 void display(double d1, double d2, const string &msg) { //Displays number distance calculation
     static int call_count {1};
-    cout << "  (#" << call_count << ") " << msg << ' ' << d1 << " and " << d2 << " = " << dist(d1, d2) << endl;
-    call_count += 1;
+    cout << "  (#" << call_count++ << ") " << msg << ' ' << d1 << " and " << d2 << " = " << dist(d1, d2) << endl;
 }
 
 void display(double x1, double y1, double x2, double y2, const string &msg) { //Displays point distance calculation
     static int call_count {1};
-    cout << "  (#" << call_count << ") " << msg << " (" << x1 << ", " << y1 << ") and (" << x2 << ", " << y2 << ")"
+    cout << "  (#" << call_count++ << ") " << msg << " (" << x1 << ", " << y1 << ") and (" << x2 << ", " << y2 << ")"
          << " = " << dist(x1, y1, x2, y2) << endl;
-    call_count += 1;
 }
 
 void change_one_or_two(int &one_or_two) { //Changes variable keeping track of which function call
-    if (one_or_two == 1)
-        one_or_two = 2;
-    else
-        one_or_two = 1;
+    if (one_or_two == 1) {one_or_two = 2;}
+    else {one_or_two = 1;}
 }
 
 /*
