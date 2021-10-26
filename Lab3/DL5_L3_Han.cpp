@@ -4,7 +4,7 @@ Lab 3: Math tutor program/quiz using random number generator
  */
 
 #include <iostream>
-#include <cstdlib>
+#include <cstdlib
 #include <ctime>
 using namespace std;
 
