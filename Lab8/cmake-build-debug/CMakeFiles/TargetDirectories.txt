@@ -1,0 +1,3 @@
+/home/jonathan/Documents/cosc1337/Lab8/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/jonathan/Documents/cosc1337/Lab8/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/jonathan/Documents/cosc1337/Lab8/cmake-build-debug/CMakeFiles/Lab8.dir
