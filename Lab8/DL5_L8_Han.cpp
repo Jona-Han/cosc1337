@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 /*
  * 1. Make a new board.
@@ -20,17 +21,19 @@ const int WINCONDITION = 4;
 class Board {
     private:
         int spaces[WIDTH][HEIGHT];
+        int emptySpacesRemaining;
         int lastPiece[3];
         void setPiece(int column, int row, int player);
         char getPiece(int column, int row);
     public:
         Board();
-        bool gameOver();
+        int gameOver();
         void displayBoard();
         bool updateBoard(int column, int player);
 };
 
 Board::Board() {
+    emptySpacesRemaining = 42;
     for (int column = 0; column < WIDTH; column++) {
         for (int row = 0; row < HEIGHT; row++) {
             spaces[column][row] = 0;
@@ -59,11 +62,12 @@ void Board::setPiece(int column, int row, int player) {
     lastPiece[0] = column;
     lastPiece[1] = row;
     lastPiece[2] = player;
+    emptySpacesRemaining--;
 }
 
 char Board::getPiece(int column, int row) {
     if (column >= WIDTH || column < 0 || row >= HEIGHT || row < 0) {
-        return 0;
+        return -63;
     }
     return spaces[column][row];
 }
@@ -86,34 +90,63 @@ void Board::displayBoard() {
     }
 }
 
-bool Board::gameOver() {
-    int piecesConnected = 1;
+int Board::gameOver() {
+    //Check for tie
+    if (emptySpacesRemaining == 0) { return 3; }
 
     //Check horizontal
+    int piecesConnected = 1;
     for (int columnCounter = 0; columnCounter < WIDTH - 1; columnCounter++) {
         if ((getPiece(columnCounter, lastPiece[1]) == lastPiece[2])
             && (getPiece(columnCounter, lastPiece[1]) == getPiece(columnCounter + 1, lastPiece[1]))) {
             piecesConnected++;
-            if (piecesConnected >= 4) { return true; }
+            if (piecesConnected >= 4) { return lastPiece[2]; }
         } else { piecesConnected = 1; }
     }
 
     //Check vertical
+    piecesConnected = 1;
     for (int rowCounter = 0; rowCounter < HEIGHT - 1; rowCounter++) {
         if ((getPiece(lastPiece[0], rowCounter) == lastPiece[2])
             && (getPiece(lastPiece[0], rowCounter) == getPiece(lastPiece[0], rowCounter + 1))) {
             piecesConnected++;
-            if (piecesConnected >= 4) {return true;}
-        } else { piecesConnected = 1;}
+            if (piecesConnected >= 4) { return lastPiece[2]; }
+        } else { piecesConnected = 1; }
     }
-    return false;
+
+    //Check diagonal ascending
+    piecesConnected = 1;
+    for (int counter = -3; counter <= 3; counter++) {
+        if ((getPiece(lastPiece[0] + counter, lastPiece[1] + counter) == lastPiece[2])
+            && (getPiece(lastPiece[0] + counter, lastPiece[1] + counter)
+                == getPiece(lastPiece[0] + counter + 1, lastPiece[1] + counter + 1))) {
+            piecesConnected++;
+            if (piecesConnected >= 4) { return lastPiece[2]; }
+        } else { piecesConnected = 1; }
+    }
+
+    //Check diagonal descending
+    piecesConnected = 1;
+    for (int counter = -3; counter <= 3; counter++) {
+        if ((getPiece(lastPiece[0] + counter, lastPiece[1] - counter) == lastPiece[2])
+            && (getPiece(lastPiece[0] + counter, lastPiece[1] - counter)
+                == getPiece(lastPiece[0] + counter + 1, lastPiece[1] - counter - 1))) {
+            piecesConnected++;
+            if (piecesConnected >= 4) { return lastPiece[2]; }
+        } else { piecesConnected = 1; }
+    }
+    return 0;
 }
 
 class Game {
     private:
+        Board board;
         bool gameOver;
         int whichPlayerIsPlaying;
-        Board board;
+        int whoWon;
+        static int playerOneWins;
+        static int playerTwoWins;
+        static int ties;
 
         void checkGameOver();
         void promptUser();
@@ -122,12 +155,20 @@ class Game {
     public:
         Game();
         void playGame();
+        int getWhoWon();
+        static int getPlayerOneScore();
+        static int getPlayerTwoScore();
+        static int getTies();
 };
+int Game::playerOneWins = 0;
+int Game::playerTwoWins = 0;
+int Game::ties = 0;
 
 Game::Game() {
     board = Board();
     gameOver = false;
     whichPlayerIsPlaying = 1;
+    whoWon = 0;
 }
 
 void Game::playGame() {
@@ -147,9 +188,9 @@ void Game::playGame() {
 
 void Game::promptUser() {
     if (whichPlayerIsPlaying == 1) {
-        cout << "Player 1 (" << "X) " << "enter your column to drop into (1-7, 0 to quit): ";
+        cout << "\nPlayer 1 (" << "X) " << "enter your column to drop into (1-7, 0 to quit): ";
     } else {
-        cout << "Player 2 (" << "O) " << "enter your column to drop into (1-7, 0 to quit): ";
+        cout << "\nPlayer 2 (" << "O) " << "enter your column to drop into (1-7, 0 to quit): ";
     }
 }
 
@@ -182,15 +223,65 @@ void Game::updateGame(int column) {
 }
 
 void Game::checkGameOver() {
-    if (board.gameOver()) {
-        gameOver = true;
+    int winner = board.gameOver();
+    switch (winner) {
+        case 1:
+            gameOver = true;
+            whoWon = 1;
+            playerOneWins++;
+            break;
+        case 2:
+            gameOver = true;
+            whoWon = 2;
+            playerTwoWins++;
+            break;
+        case 3:
+            gameOver = true;
+            whoWon = 3;
+            ties++;
+            break;
     }
 }
 
+inline int Game::getPlayerOneScore() { return playerOneWins; }
+
+inline int Game::getPlayerTwoScore() { return playerTwoWins; }
+
+inline int Game::getWhoWon() { return whoWon; }
+
+inline int Game:: getTies() { return ties; }
+
 int main() {
-    cout << "Welcome to connect 4.\n";
-    Game game = Game();
-    game.playGame();
-    cout << "Good-bye!";
+    cout << "Welcome to connect 4. Below is the initial game board.\nEach column is marked by a number 1-7.\n"
+         << "The two player tokens are X and O. X begins.\n";
+    while (true) {
+        Game game = Game();
+        game.playGame();
+        int winner= game.getWhoWon();
+        if (winner == 1 || winner == 2) {
+            cout << "Player " << winner << " has won the game!!!\n";
+        } else if (winner == 3){
+            cout << "Game is a tie. No one won!\n";
+        } else {
+            break;
+        }
+
+        int playerOneWins = Game::getPlayerOneScore();
+        int playerTwoWins = Game::getPlayerTwoScore();
+        int ties = Game::getTies();
+        double totalGamesPlayed = playerOneWins + playerTwoWins + ties;
+        cout << fixed << setprecision(0) << "Player one wins: " << playerOneWins << " ("
+        << playerOneWins / totalGamesPlayed  * 100 << "%)    Player two wins: " << playerTwoWins << " ("
+        << playerTwoWins / totalGamesPlayed  * 100 << "%)    Ties: " << ties << " ("
+        << ties / totalGamesPlayed * 100 << "%)";
+        cout << "\nDo you want to play again? (y/n): ";
+        char userInput;
+        cin >> userInput;
+        if (tolower(userInput) == 'y') {
+            continue;
+        }
+        break;
+    }
+    cout << "\nThis ends the Connect 4 game. Thanks for playing. Good-bye!";
     return 0;
 }
