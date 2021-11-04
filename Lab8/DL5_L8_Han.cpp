@@ -91,7 +91,7 @@ bool Board::gameOver() {
 
     //Check horizontal
     for (int columnCounter = 0; columnCounter < WIDTH - 1; columnCounter++) {
-        if ((getPiece(columnCounter, lastPiece[1]) == lastPiece[3])
+        if ((getPiece(columnCounter, lastPiece[1]) == lastPiece[2])
             && (getPiece(columnCounter, lastPiece[1]) == getPiece(columnCounter + 1, lastPiece[1]))) {
             piecesConnected++;
             if (piecesConnected >= 4) { return true; }
@@ -100,7 +100,7 @@ bool Board::gameOver() {
 
     //Check vertical
     for (int rowCounter = 0; rowCounter < HEIGHT - 1; rowCounter++) {
-        if ((getPiece(lastPiece[0], rowCounter) == lastPiece[3])
+        if ((getPiece(lastPiece[0], rowCounter) == lastPiece[2])
             && (getPiece(lastPiece[0], rowCounter) == getPiece(lastPiece[0], rowCounter + 1))) {
             piecesConnected++;
             if (piecesConnected >= 4) {return true;}
@@ -131,12 +131,12 @@ Game::Game() {
 }
 
 void Game::playGame() {
+    board.displayBoard();
     while (!gameOver) {
-        board.displayBoard();
-        checkGameOver();
         promptUser();
         int userInput = getUserInput();
         updateGame(userInput);
+        checkGameOver();
         if (whichPlayerIsPlaying == 1) {
             whichPlayerIsPlaying = 2;
         } else {
@@ -171,12 +171,13 @@ void Game::updateGame(int column) {
         while(!board.updateBoard(column - 1, whichPlayerIsPlaying)) {
             cout << "Column is full! Please enter a column (1-7, 0 to quit): ";
             column = getUserInput();
-            
+
             if (column == 0) {
                 gameOver = true;
                 return;
             }
         }
+        board.displayBoard();
     }
 }
 
