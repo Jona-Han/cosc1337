@@ -13,16 +13,17 @@ using namespace std;
  * 8. If not, repeat 2-6 for next player.
  */
 
-const int XDIMENSION = 7;
-const int YDIMENSION = 6;
+const int WIDTH = 7;
+const int HEIGHT = 6;
 const int WINCONDITION = 4;
 
 class Board {
     private:
-        char spaces[XDIMENSION][YDIMENSION];
+        int spaces[WIDTH][HEIGHT];
+        int lastPiece[3];
         void setPiece(int column, int row, int player);
         char getPiece(int column, int row);
-public:
+    public:
         Board();
         bool gameOver();
         void displayBoard();
@@ -30,17 +31,17 @@ public:
 };
 
 Board::Board() {
-    for (int column = 0; column < XDIMENSION; column++) {
-        for (int row = 0; row < YDIMENSION; row++) {
-            spaces[column][row] = '*';
+    for (int column = 0; column < WIDTH; column++) {
+        for (int row = 0; row < HEIGHT; row++) {
+            spaces[column][row] = 0;
         }
     }
 }
 
 bool Board::updateBoard(int column, int player) {
     int row = 0;
-    while (getPiece(column, row) != '*') {
-        if (row == YDIMENSION) {
+    while (getPiece(column, row) != 0) {
+        if (row >= HEIGHT - 1) {
             return false;
         }
         row++;
@@ -50,33 +51,62 @@ bool Board::updateBoard(int column, int player) {
 }
 
 void Board::setPiece(int column, int row, int player) {
-    if (player == 0) {
-        spaces[column][row] = 'X';
+    if (player == 1) {
+        spaces[column][row] = 1;
     } else {
-        spaces[column][row] = 'O';
+        spaces[column][row] = 2;
     }
+    lastPiece[0] = column;
+    lastPiece[1] = row;
+    lastPiece[2] = player;
 }
 
 char Board::getPiece(int column, int row) {
+    if (column >= WIDTH || column < 0 || row >= HEIGHT || row < 0) {
+        return 0;
+    }
     return spaces[column][row];
 }
 
 void Board::displayBoard() {
-    cout << "    1234567\n    -------";
-    for (int row = YDIMENSION - 1; row >= 0; row--) {
+    cout << "\n    1234567\n    -------\n";
+    for (int row = HEIGHT - 1; row >= 0; row--) {
         cout << "    ";
-        for (int column = XDIMENSION - 1; column >= 0; column--) {
-            cout << spaces[column][row];
+        for (int column = 0; column < WIDTH; column++) {
+            int piece = getPiece(column, row);
+            if (piece == 0) {
+                cout << '*';
+            } else if (piece == 1) {
+                cout << 'X';
+            } else {
+                cout << 'O';
+            }
         }
         cout << endl;
     }
 }
 
 bool Board::gameOver() {
-    int piecesInARow;
-    int columnIndex = 0;
-    int rowIndex = 0;
-    
+    int piecesConnected = 1;
+
+    //Check horizontal
+    for (int columnCounter = 0; columnCounter < WIDTH - 1; columnCounter++) {
+        if ((getPiece(columnCounter, lastPiece[1]) == lastPiece[3])
+            && (getPiece(columnCounter, lastPiece[1]) == getPiece(columnCounter + 1, lastPiece[1]))) {
+            piecesConnected++;
+            if (piecesConnected >= 4) { return true; }
+        } else { piecesConnected = 1; }
+    }
+
+    //Check vertical
+    for (int rowCounter = 0; rowCounter < HEIGHT - 1; rowCounter++) {
+        if ((getPiece(lastPiece[0], rowCounter) == lastPiece[3])
+            && (getPiece(lastPiece[0], rowCounter) == getPiece(lastPiece[0], rowCounter + 1))) {
+            piecesConnected++;
+            if (piecesConnected >= 4) {return true;}
+        } else { piecesConnected = 1;}
+    }
+    return false;
 }
 
 class Game {
@@ -89,7 +119,7 @@ class Game {
         void promptUser();
         void updateGame(int column);
         int getUserInput();
-public:
+    public:
         Game();
         void playGame();
 };
@@ -97,34 +127,38 @@ public:
 Game::Game() {
     board = Board();
     gameOver = false;
-    whichPlayerIsPlaying = 0;
+    whichPlayerIsPlaying = 1;
 }
 
 void Game::playGame() {
-    board.displayBoard();
     while (!gameOver) {
+        board.displayBoard();
+        checkGameOver();
         promptUser();
         int userInput = getUserInput();
         updateGame(userInput);
-        checkGameOver();
-        whichPlayerIsPlaying = (whichPlayerIsPlaying + 1) % 2;
+        if (whichPlayerIsPlaying == 1) {
+            whichPlayerIsPlaying = 2;
+        } else {
+            whichPlayerIsPlaying = 1;
+        }
     }
 }
 
 void Game::promptUser() {
-    if (whichPlayerIsPlaying == 0) {
-        cout << "Player 1 (" << "X) " << "enter your column to drop into (1-7, zero to quit): ";
+    if (whichPlayerIsPlaying == 1) {
+        cout << "Player 1 (" << "X) " << "enter your column to drop into (1-7, 0 to quit): ";
     } else {
-        cout << "Player 2 (" << "O) " << "enter your column to drop into (1-7, zero to quit): ";
+        cout << "Player 2 (" << "O) " << "enter your column to drop into (1-7, 0 to quit): ";
     }
 }
 
 int Game::getUserInput() {
     int userInput;
-    while (!(cin >> userInput && userInput >= 0 && userInput <= XDIMENSION)) {
+    while (!(cin >> userInput && userInput >= 0 && userInput <= WIDTH)) {
         cin.clear();
         cin.ignore(10000, '\n');
-        cout << "Please enter a column (1-7).\n";
+        cout << "Out of Bounds. Please enter a column (1-7, 0 to quit): ";
     }
     return userInput;
 }
@@ -134,11 +168,15 @@ void Game::updateGame(int column) {
         gameOver = true;
         return;
     } else {
-        while(!board.updateBoard(column, whichPlayerIsPlaying)) {
-            cout << "Column is full! Please enter a column (1-7): ";
+        while(!board.updateBoard(column - 1, whichPlayerIsPlaying)) {
+            cout << "Column is full! Please enter a column (1-7, 0 to quit): ";
             column = getUserInput();
+            
+            if (column == 0) {
+                gameOver = true;
+                return;
+            }
         }
-        board.displayBoard();
     }
 }
 
@@ -149,6 +187,7 @@ void Game::checkGameOver() {
 }
 
 int main() {
+    cout << "Welcome to connect 4.\n";
     Game game = Game();
     game.playGame();
     cout << "Good-bye!";
