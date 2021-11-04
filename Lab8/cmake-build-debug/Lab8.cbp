@@ -82,7 +82,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/jonathan/Documents/cosc1337/Lab8/main.cpp">
+		<Unit filename="/home/jonathan/Documents/cosc1337/Lab8/DL5_L8_Han.cpp">
 			<Option target="Lab8"/>
 		</Unit>
 		<Unit filename="/home/jonathan/Documents/cosc1337/Lab8/CMakeLists.txt">

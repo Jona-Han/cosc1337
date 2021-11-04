@@ -129,29 +129,29 @@ Lab8/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab8.dir/build.make CMakeFiles/Lab8.dir/build
 .PHONY : Lab8/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+DL5_L8_Han.o: DL5_L8_Han.cpp.o
+.PHONY : DL5_L8_Han.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab8.dir/build.make CMakeFiles/Lab8.dir/main.cpp.o
-.PHONY : main.cpp.o
+DL5_L8_Han.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab8.dir/build.make CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o
+.PHONY : DL5_L8_Han.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+DL5_L8_Han.i: DL5_L8_Han.cpp.i
+.PHONY : DL5_L8_Han.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab8.dir/build.make CMakeFiles/Lab8.dir/main.cpp.i
-.PHONY : main.cpp.i
+DL5_L8_Han.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab8.dir/build.make CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.i
+.PHONY : DL5_L8_Han.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+DL5_L8_Han.s: DL5_L8_Han.cpp.s
+.PHONY : DL5_L8_Han.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab8.dir/build.make CMakeFiles/Lab8.dir/main.cpp.s
-.PHONY : main.cpp.s
+DL5_L8_Han.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Lab8.dir/build.make CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.s
+.PHONY : DL5_L8_Han.cpp.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Lab8"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... DL5_L8_Han.o"
+	@echo "... DL5_L8_Han.i"
+	@echo "... DL5_L8_Han.s"
 .PHONY : help
 
 

@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/Lab8.dir/main.cpp.o -o Lab8 
+/usr/bin/c++ -g CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o -o Lab8 

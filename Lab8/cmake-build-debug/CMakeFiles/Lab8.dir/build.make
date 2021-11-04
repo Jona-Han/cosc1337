@@ -66,27 +66,27 @@ include CMakeFiles/Lab8.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Lab8.dir/flags.make
 
-CMakeFiles/Lab8.dir/main.cpp.o: CMakeFiles/Lab8.dir/flags.make
-CMakeFiles/Lab8.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jonathan/Documents/cosc1337/Lab8/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Lab8.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Lab8.dir/main.cpp.o -c /home/jonathan/Documents/cosc1337/Lab8/main.cpp
+CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o: CMakeFiles/Lab8.dir/flags.make
+CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o: ../DL5_L8_Han.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jonathan/Documents/cosc1337/Lab8/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o -c /home/jonathan/Documents/cosc1337/Lab8/DL5_L8_Han.cpp
 
-CMakeFiles/Lab8.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Lab8.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jonathan/Documents/cosc1337/Lab8/main.cpp > CMakeFiles/Lab8.dir/main.cpp.i
+CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jonathan/Documents/cosc1337/Lab8/DL5_L8_Han.cpp > CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.i
 
-CMakeFiles/Lab8.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Lab8.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jonathan/Documents/cosc1337/Lab8/main.cpp -o CMakeFiles/Lab8.dir/main.cpp.s
+CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jonathan/Documents/cosc1337/Lab8/DL5_L8_Han.cpp -o CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.s
 
 # Object files for target Lab8
 Lab8_OBJECTS = \
-"CMakeFiles/Lab8.dir/main.cpp.o"
+"CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o"
 
 # External object files for target Lab8
 Lab8_EXTERNAL_OBJECTS =
 
-Lab8: CMakeFiles/Lab8.dir/main.cpp.o
+Lab8: CMakeFiles/Lab8.dir/DL5_L8_Han.cpp.o
 Lab8: CMakeFiles/Lab8.dir/build.make
 Lab8: CMakeFiles/Lab8.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jonathan/Documents/cosc1337/Lab8/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Lab8"
