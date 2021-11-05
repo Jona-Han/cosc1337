@@ -129,7 +129,7 @@ void Board::displayBoard() {
  * lastPiece[2] is the last player who set a piece (1 or 2).
  * Possible optimization here and make code less ugly.
  *
- * @return 1 if player 1 has connected 4, 2 if player 2 has connected 4, 3 if no empty spaces remain, otherwise 0.
+ * @return 1 if player 1 has connected four, 2 if player 2 has connected four, 3 if no empty spaces remain, otherwise 0.
  */
 int Board::gameOver() {
     //Check for tie and return 3 if no empty spaces remain on the board.
