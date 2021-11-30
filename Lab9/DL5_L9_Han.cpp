@@ -226,61 +226,82 @@ int main () {
 
 
 // Add 2 sorts of your own. Document which sort you implemented
-// <add code> Add your first sort algorithm in here
+// My bubble sort
 void bubbleSort(int array[], int size, bool verbose=false) {
-    bool madeASwapThisPass;
-    int numberOfPasses = 1;
+    bool madeASwapThisPass;    //stores whether a swap was made in the current pass.
+    int numberOfPasses = 1;     //Stores number of passes
+
+    //Keep sorting through the array until no swaps are made.
     do {
         madeASwapThisPass = false;
+
+        //The for loop looks through the unsorted portion of array.
+        //At a very minimum, on each pass, the largest value on the end will be in the final sorted position
         for (int currentIndexCount = 0; currentIndexCount < size - numberOfPasses; currentIndexCount++) {
+            //If the value of the currently indexed element is larger than the next element, then
+            // the 2 should be switched
             if (array[currentIndexCount] > array[currentIndexCount + 1]) {
+                //Print the elements before the swap
                 if (verbose) {
                     cout << "    Before swap: array[" << currentIndexCount << "]=" << array[currentIndexCount]
                     << " > array[" << currentIndexCount + 1 << "]=" << array[currentIndexCount + 1] << endl;
                 }
+                //Swap the larger current element with the smaller next element
                 int temporary = array[currentIndexCount];
                 array[currentIndexCount] = array[currentIndexCount + 1];
                 array[currentIndexCount + 1] = temporary;
-                madeASwapThisPass = true;
+                madeASwapThisPass = true;   //Set the made a swap to true so the do while loop will continue
+                //Print the elements after the swap
                 if (verbose) {
                     cout << "    After swap: array[" << currentIndexCount << "]=" << array[currentIndexCount]
                     << " < array[" << currentIndexCount + 1 << "]=" << array[currentIndexCount + 1] << endl << endl;
                 }
             }
         }
+        //Print the array after a pass
         if (verbose) {
             cout << "  After pass " << numberOfPasses << " the array is: ";
             showArray(array, size);
             cout << endl;
         }
         numberOfPasses++;
+
+    //... Check the rest of the unsorted array as the unsorted portion grows smaller and smaller
     } while (madeASwapThisPass);
 }
 
-// <add code> Add your second sort algorithm in here
+//My insertion sort
 void insertionSort(int array[], int size, bool verbose=false) {
+    //Iterate through the entire array once, starting from the second element, this will be the key
     for (int keyIndex = 1; keyIndex < size; keyIndex++) {
+        //Store the value at the current key index and the index before
         int keyValue = array[keyIndex];
         int indexBefore = keyIndex - 1;
-        if (verbose) cout << "    Current key value at array[" << keyIndex <<"]=" << keyValue << endl;
+        if (verbose) cout << "    Current key value at array[" << keyIndex << "]=" << keyValue << endl;
 
-        while(indexBefore >= 0 && array[indexBefore] > keyValue) {
+        //Compare the key's value to the value of the element before it
+        //If the key is smaller than element before, then we will shift the element before up 1 index and then
+        //check the next previous element, repeating until the key can't move down any further
+        while (indexBefore >= 0 && array[indexBefore] > keyValue) {
             if (verbose) {
-                cout << "    Shifting array[" <<  indexBefore << "]=" << array[indexBefore]
-                     << " right one position to array[" << indexBefore + 1 << "]"  << endl;
+                cout << "    Shifting array[" << indexBefore << "]=" << array[indexBefore]
+                     << " up one position to array[" << indexBefore + 1 << "]" << endl;
             }
+            //Shift the element up one position.
             array[indexBefore + 1] = array[indexBefore];
-            indexBefore--;
+            indexBefore--; //Decrement indexBefore so we can check the next previous element
         }
         if (verbose) cout << "    Placing key value (" << keyValue << ") at array[" << indexBefore + 1 << "]\n";
+        //After shifting all the previous elements greater than the key up, place the key value in the empty spot
         array[indexBefore + 1] = keyValue;
+        //Print out the array after checking a key
         if (verbose) {
-            cout << "\n  After pass " << keyIndex << " the array is: ";
+            cout << "\n  After checking key index " << keyIndex << " the array is: ";
             showArray(array, size);
             cout << endl;
         }
+        //... Check the new element as the key
     }
-
 }
 
 // Your new search algorithm cannot be linear search, which is provided here.
@@ -292,20 +313,26 @@ bool linearSearchArray(int array[], int size, int target, int &position) {
     return false;
 }
 
+//My binary search
 bool binarySearchArray(int array[], int size, int target, int &position) {
-    int lowestIndexBoundary = 0;
-    int highestIndexBoundary = size - 1;
-    bool found = false;
-    position = -1;
+    int lowestIndexBoundary = 0;    //Lower boundary of the portion of the array the target can be in
+    int highestIndexBoundary = size - 1;    //Upper boundary of the portion of the array the target can be in
+    bool found = false;     //Function returns whether the target is found
+    position = -1;  //Position is -1 if the value can't be found
+    //Look for the target while the boundaries aren't the same
     while (lowestIndexBoundary <= highestIndexBoundary) {
         int midpoint = (lowestIndexBoundary + highestIndexBoundary) / 2;
 
+        //Check if the value at the midpoint of the array is the target, if so set position and set found to true
+        //and stop searching
         if (array[midpoint] == target) {
             position = midpoint;
             found = true;
             break;
+        //If the target is smaller than the midpoint, then search the lower half of the unsearched array
         } else if (array[midpoint] > target) {
             highestIndexBoundary = midpoint - 1;
+        //If the target is larger than the midpoint, then search the upper half of the unsearched array
         } else {
             lowestIndexBoundary = midpoint + 1;
         }
@@ -391,5 +418,154 @@ void selectionSort(int array[], int size, bool verbose=false) {
 }
 
 /* !!! PROVIDE TESTING OUTPUT WITH YOUR OWN TEST RESULTS !!!
+Test sorting algorithms on small array:
+
+selection sort start: smallArray is:  7 9 3 1 8 6 2
+  prev min in array[0]=7; new min in array[2]=3
+  prev min in array[2]=3; new min in array[3]=1
+  swap left in array[0]=7 with min in array[3]=1
+  After pass 0 the array is:  1 9 3 7 8 6 2
+
+  prev min in array[1]=9; new min in array[2]=3
+  prev min in array[2]=3; new min in array[6]=2
+  swap left in array[1]=9 with min in array[6]=2
+  After pass 1 the array is:  1 2 3 7 8 6 9
+
+  swap left in array[2]=3 with min in array[2]=3
+  After pass 2 the array is:  1 2 3 7 8 6 9
+
+  prev min in array[3]=7; new min in array[5]=6
+  swap left in array[3]=7 with min in array[5]=6
+  After pass 3 the array is:  1 2 3 6 8 7 9
+
+  prev min in array[4]=8; new min in array[5]=7
+  swap left in array[4]=8 with min in array[5]=7
+  After pass 4 the array is:  1 2 3 6 7 8 9
+
+  swap left in array[5]=8 with min in array[5]=8
+  After pass 5 the array is:  1 2 3 6 7 8 9
+
+selection sort stop:  smallArray is:  1 2 3 6 7 8 9
+Verified: smallArray is sorted.
+
+bubble sort start: smallArray is:  7 9 3 1 8 6 2
+    Before swap: array[1]=9 > array[2]=3
+    After swap: array[1]=3 < array[2]=9
+
+    Before swap: array[2]=9 > array[3]=1
+    After swap: array[2]=1 < array[3]=9
+
+    Before swap: array[3]=9 > array[4]=8
+    After swap: array[3]=8 < array[4]=9
+
+    Before swap: array[4]=9 > array[5]=6
+    After swap: array[4]=6 < array[5]=9
+
+    Before swap: array[5]=9 > array[6]=2
+    After swap: array[5]=2 < array[6]=9
+
+  After pass 1 the array is:  7 3 1 8 6 2 9
+
+    Before swap: array[0]=7 > array[1]=3
+    After swap: array[0]=3 < array[1]=7
+
+    Before swap: array[1]=7 > array[2]=1
+    After swap: array[1]=1 < array[2]=7
+
+    Before swap: array[3]=8 > array[4]=6
+    After swap: array[3]=6 < array[4]=8
+
+    Before swap: array[4]=8 > array[5]=2
+    After swap: array[4]=2 < array[5]=8
+
+  After pass 2 the array is:  3 1 7 6 2 8 9
+
+    Before swap: array[0]=3 > array[1]=1
+    After swap: array[0]=1 < array[1]=3
+
+    Before swap: array[2]=7 > array[3]=6
+    After swap: array[2]=6 < array[3]=7
+
+    Before swap: array[3]=7 > array[4]=2
+    After swap: array[3]=2 < array[4]=7
+
+  After pass 3 the array is:  1 3 6 2 7 8 9
+
+    Before swap: array[2]=6 > array[3]=2
+    After swap: array[2]=2 < array[3]=6
+
+  After pass 4 the array is:  1 3 2 6 7 8 9
+
+    Before swap: array[1]=3 > array[2]=2
+    After swap: array[1]=2 < array[2]=3
+
+  After pass 5 the array is:  1 2 3 6 7 8 9
+
+  After pass 6 the array is:  1 2 3 6 7 8 9
+
+bubble sort stop:  smallArray is:  1 2 3 6 7 8 9
+Verified: smallArray is sorted.
+
+insertion sort start: smallArray is:  7 9 3 1 8 6 2
+    Current key value at array[1]=9
+    Placing key value (9) at array[1]
+
+  After checking key index 1 the array is:  7 9 3 1 8 6 2
+
+    Current key value at array[2]=3
+    Shifting array[1]=9 up one position to array[2]
+    Shifting array[0]=7 up one position to array[1]
+    Placing key value (3) at array[0]
+
+  After checking key index 2 the array is:  3 7 9 1 8 6 2
+
+    Current key value at array[3]=1
+    Shifting array[2]=9 up one position to array[3]
+    Shifting array[1]=7 up one position to array[2]
+    Shifting array[0]=3 up one position to array[1]
+    Placing key value (1) at array[0]
+
+  After checking key index 3 the array is:  1 3 7 9 8 6 2
+
+    Current key value at array[4]=8
+    Shifting array[3]=9 up one position to array[4]
+    Placing key value (8) at array[3]
+
+  After checking key index 4 the array is:  1 3 7 8 9 6 2
+
+    Current key value at array[5]=6
+    Shifting array[4]=9 up one position to array[5]
+    Shifting array[3]=8 up one position to array[4]
+    Shifting array[2]=7 up one position to array[3]
+    Placing key value (6) at array[2]
+
+  After checking key index 5 the array is:  1 3 6 7 8 9 2
+
+    Current key value at array[6]=2
+    Shifting array[5]=9 up one position to array[6]
+    Shifting array[4]=8 up one position to array[5]
+    Shifting array[3]=7 up one position to array[4]
+    Shifting array[2]=6 up one position to array[3]
+    Shifting array[1]=3 up one position to array[2]
+    Placing key value (2) at array[1]
+
+  After checking key index 6 the array is:  1 2 3 6 7 8 9
+
+insertion sort stop:  smallArray is:  1 2 3 6 7 8 9
+Verified: smallArray is sorted.
+
+
+Selection sort on bigArray took: 4405791.00 milliseconds.
+Linear search  of bigArray took:  134.10 milliseconds.
+Algorithm               1000        2000        4000        8000       16000       32000       64000
+================     =======     =======     =======     =======     =======     =======     =======
+selection sort       1099.00     4291.00    16949.00    67581.00   269104.00  1074835.00  4295091.00
+bubble sort          1434.00     5446.00    22115.00    99806.00   499946.00  2236387.00  9421042.00
+insertion sort        589.00     2328.00     9383.00    36807.00   149220.00   600245.00  2395681.00
+--------
+linear search           2.12        4.18        8.37       16.73       33.43       66.88      134.21
+binary search           0.07        0.07        0.08        0.08        0.09        0.10        0.10
+
+Process finished with exit code 0
 
 */

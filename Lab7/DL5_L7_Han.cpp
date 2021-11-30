@@ -44,7 +44,7 @@ class CaseFan {
 };
 
 CaseFan::CaseFan() {
-    name;
+    name = " ";
     size = 0;
     rpm = 0;
     decibels = 0;
@@ -92,7 +92,7 @@ void CaseFan::setFlowRate(double value) {
     if (value >= 0) {
         flowRate = value;
     } else if (!(flowRate >= 0)){
-        flowRate = 0;
+        flowRate = 0.0;
     }
 }
 
