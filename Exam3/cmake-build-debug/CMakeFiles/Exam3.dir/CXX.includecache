@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/han/code/cosc1337/Exam3/DL5_X3_Han.cpp
+iostream
+-
+iomanip
+-
+vector
+-
+string
+-
+
